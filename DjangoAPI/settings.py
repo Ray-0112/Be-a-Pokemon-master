@@ -12,9 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
-import dj_database_url
-from decouple import config
+
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 MEDIA_URL = '/media/'
@@ -96,12 +94,17 @@ WSGI_APPLICATION = 'DjangoAPI.wsgi.application'
 #    }
 #}
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',#django.db.backends.postgresql_psycopg2
+        'NAME': 'dmvhp032bfdfb',
+        'USER': 'njulcprmvfnqay',
+        'PASSWORD': '7bee8d26fa51b5610566fedd20302c9ba451173803399333c3648724adc9c18c',
+        'HOST': 'ec2-54-197-100-79.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
 }
 
-
+CORS_ORIGIN_ALLOW_ALL = True
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -142,15 +145,8 @@ STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals())
